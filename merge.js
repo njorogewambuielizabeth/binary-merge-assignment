@@ -61,7 +61,7 @@ console.log(index1);
 // quiz 2; given an unsorted array of numbers return the sorted array in descending order
 // let arr = [123,89,5,23,9,56]
 function mergeSort(arr) {
-    if (arr.length < 2) {
+    if (arr.length < 1) {
       return arr;
     }
   
@@ -73,87 +73,87 @@ function mergeSort(arr) {
   }
   
   function merge(left, right) {
-    let m = 0;
-    let n = 0;
+   
     const result = [];
   
     while (m < left.length && n < right.length) {
-      if (left[m] > right[n]) {
-        result.push(left[m]);
-        m++;
+      if (left[0] > right[0]) {
+        result.push(left.shift());
+        
       } else {
-        result.push(right[n]);
-        n++;
+        result.push(right.shift());
+        
       }
     }
   
-    return result.concat(left.slice(m)).concat(right.slice(n));
+    return result.concat(left,right);
   }
   
-  let arr = [123, 89, 5, 23, 9, 56];
+  let arr1 = [123, 89, 5, 23, 9, 56];
   
-  const sortedArr2 = mergeSort(arr);
+  arr1 = mergeSort(arr1).reverse();
   
-  console.log(sortedArr2); 
+  console.log(arr1); 
 
   //quiz 3; given the following array, search for the following target 
   //let target = 34
   //let arr2 = [1,4,78,2,67,3]
   function mergeSort(arr) {
-    if (arr.length < 2) {
+    if (arr.length <= 1) {
       return arr;
     }
   
-    const mid = Math.floor(arr.length / 2);
-    const left = arr.slice(0, mid);
-    const right = arr.slice(mid);
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
   
     return merge(mergeSort(left), mergeSort(right));
   }
   
-  function merge(leftNum, rightNum) {
-    let f = 0;
-    let v = 0;
+  function merge(left, right) {
     const result = [];
   
-    while (f < leftNum.length && v < rightNum.length) {
-      if (leftNum[f] < rightNum[v]) {
-        result.push(leftNum[f]);
-        f++;
+    while (left.length && right.length) {
+      if (left[0] <= right[0]) {
+        result.push(left.shift());
       } else {
-        result.push(rightNum[v]);
-        v++;
+        result.push(right.shift());
       }
     }
   
-    return result.concat(leftNum.slice(f)).concat(rightNum.slice(v));
+    return result.concat(left, right);
+  }
+  
+  let target = 34;
+  let arr = [1, 4, 78, 2, 67, 3];
+  arr = mergeSort(arr);
+  let index = binarySearch(arr, target);
+  
+  if (index !== -1) {
+    console.log(`Target value ${target} is found at index ${index}.`);
+  } else {
+    console.log(`Target value ${target} is null.`);
   }
   
   function binarySearch(arr, target) {
-    let leftNum = 0;
-    let rightNum = arr.length - 1;
+    let left = 0;
+    let right = arr.length - 1;
   
-    while (leftNum <= rightNum) {
-      const mid = Math.floor((leftNum + rightNum) / 2);
+    while (left <= right) {
+      const middle = Math.floor((left + right) / 2);
   
-      if (arr[mid] === target) {
-        return mid;
-      } else if (arr[mid] < target) {
-        left = mid + 1;
+      if (arr[middle] === target) {
+        return middle;
+      } else if (arr[middle] > target) {
+        right = middle - 1;
       } else {
-        right = mid - 1;
+        left = middle + 1;
       }
     }
   
-    return null;
+    return -1;
   }
   
-  let arr2 = [1, 4, 78, 2, 67, 3];
-  let target = 34;
   
-  const sortedArr = mergeSort(arr2);
-  const index3 = binarySearch(sortedArr, target);
-  
-  console.log(index3);
   
   
